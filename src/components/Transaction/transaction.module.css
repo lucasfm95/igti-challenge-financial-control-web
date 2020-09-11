@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.day {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+.description > .category {
+    font-weight: bold;
+}
+
+.value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.actions {
+
+}

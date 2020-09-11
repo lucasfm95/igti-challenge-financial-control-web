@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
+import FinancialControl from "./components/FinancialControl/FinancialControl";
 
 export default function App() {
-  return <h1>Desafio Final do Bootcamp Full Stack Lucas Martins</h1>;
+  return <FinancialControl />;
 }
