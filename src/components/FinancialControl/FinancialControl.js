@@ -14,7 +14,9 @@ export default function FinancialControl() {
 
     const refYearMonth = "2020-09";
     const [filteredTransactions, setFilteredTransactions] = useState([]);
+    const [selectedTransaction, setSelectedTransaction] = useState({});
     const [totalizer, setTotalizer] = useState({ totalItens: 0, credit: 0, debit: 0, total: 0 });
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const getTransactions = async () => {
@@ -91,14 +93,24 @@ export default function FinancialControl() {
         await handleChangeSelect(lastSelectMonth);
     }
 
+    function handleUpdate(id) {
+        const data = filteredTransactions.find((Transaction) => Transaction.id === id);
+        console.log("atualizar");
+        console.log(data);
+        console.log("================================");
+        //setSelectedTransaction(data);
+        //setModalOpen(true);
+    }
+
     return (
         <div className={css.container}>
             <h1>Financial Control</h1>
             <ReferenceMonth onChange={handleChangeSelect} initSelected={refYearMonth} />
             <Totalizer totalizer={totalizer} />
             <FilterTransaction onChange={handleChangeInput} />
-            <ModalDetail />
-            <Transactions transactions={filteredTransactions} onDelete={handleDelete} />
+            <button className="waves-effect waves-light btn-small" onClick={() => { setModalOpen(true) }}>+</button>
+            <Transactions transactions={filteredTransactions} onDelete={handleDelete} onUpdate={handleUpdate} />
+            <ModalDetail openModal={modalOpen} closeModal={() => { setModalOpen(false) }} selectedTransaction={selectedTransaction} />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import Transaction from "../Transaction/Transaction";
 import css from "./transactions.module.css";
 import { formatMoney } from "../../helpers/format.js";
 
-export default function Transactions({ transactions, onDelete }) {
+export default function Transactions({ transactions, onDelete, onUpdate }) {
     return (
         <div className={css.container}>
             {transactions.map(transaction => {
@@ -14,6 +14,7 @@ export default function Transactions({ transactions, onDelete }) {
                     description={transaction.description}
                     value={formatMoney(transaction.value)}
                     onDelete={onDelete}
+                    onUpdate={onUpdate}
                 />
             })}
         </div>

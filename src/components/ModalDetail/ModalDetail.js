@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import css from "./modalDetail.module.css";
 
@@ -15,28 +15,20 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function ModalDetail() {
-    var subtitle;
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+export default function ModalDetail({ openModal, closeModal, selectedTransaction }) {
 
-    function openModal() {
-        setIsOpen(true);
-    }
+    var subtitle;
+    const [transactiont, setTransaction] = useState(selectedTransaction);
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
         subtitle.style.color = '#f00';
     }
 
-    function closeModal() {
-        setIsOpen(false);
-    }
-
     return (
         <div className={css.container}>
-            <button className="waves-effect waves-light btn-small" onClick={openModal}>+</button>
             <Modal
-                isOpen={modalIsOpen}
+                isOpen={openModal}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={customStyles}
@@ -64,7 +56,7 @@ export default function ModalDetail() {
 
                         <div className="row">
                             <div className="input-field col s12">
-                                <input type="text" placeholder="Description" />
+                                <input type="text" placeholder="Description" value={transactiont.description} onChange={(env) => setTransaction(env.target.value)} />
                             </div>
                         </div>
 
