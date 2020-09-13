@@ -8,20 +8,17 @@ import FilterTransaction from "../FilterTransaction/FilterTransaction";
 import ModalDetail from "../ModalDetail/ModalDetail";
 
 var transactions = [];
+var lastSelectMonth = "2020-09";
 
 export default function FinancialControl() {
-
 
     const refYearMonth = "2020-09";
     const [filteredTransactions, setFilteredTransactions] = useState([]);
     const [totalizer, setTotalizer] = useState({ totalItens: 0, credit: 0, debit: 0, total: 0 });
 
-
     useEffect(() => {
         const getTransactions = async () => {
             transactions = await getTransactionsByYearMonth(refYearMonth);
-
-            transactions = transactions.sort((a, b) => a.day - b.day);
 
             setFilteredTransactions(transactions);
             setTotalizerByTransactions(transactions);
@@ -30,19 +27,28 @@ export default function FinancialControl() {
         getTransactions();
     }, []);
 
-
     async function getTransactionsByYearMonth(yearMonth) {
         const result = await axios.get(`http://localhost:4000/transactions/?monthYear=${yearMonth}`);
         return result.data;
     }
 
+    async function removeTransaction(id) {
+        try {
+            const result = await axios.delete(`http://localhost:4000/transactions`, { headers: { id: id } });
+            console.log(result)
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     async function handleChangeSelect(yearMonth) {
+        lastSelectMonth = yearMonth;
         const data = await getTransactionsByYearMonth(yearMonth);
 
         transactions = data;
         setValuesTransaction(transactions);
     }
-
 
     function setTotalizerByTransactions(transactions) {
         const totalItens = transactions.length;
@@ -79,6 +85,12 @@ export default function FinancialControl() {
         setValuesTransaction(filtered);
     }
 
+    async function handleDelete(id) {
+        console.log(id)
+        await removeTransaction(id);
+        await handleChangeSelect(lastSelectMonth);
+    }
+
     return (
         <div className={css.container}>
             <h1>Financial Control</h1>
@@ -86,7 +98,7 @@ export default function FinancialControl() {
             <Totalizer totalizer={totalizer} />
             <FilterTransaction onChange={handleChangeInput} />
             <ModalDetail />
-            <Transactions transactions={filteredTransactions} />
+            <Transactions transactions={filteredTransactions} onDelete={handleDelete} />
         </div>
     )
 }

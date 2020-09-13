@@ -1,7 +1,12 @@
 import React from "react";
 import css from "./transaction.module.css";
 
-export default function Transaction({ day, category, description, value }) {
+export default function Transaction({ id, day, category, description, value, onDelete }) {
+
+    function handleRemoveTransaction() {
+        onDelete(id);
+    }
+
     return (
         <div className={css.container}>
             <div className={css.day}>
@@ -22,7 +27,7 @@ export default function Transaction({ day, category, description, value }) {
                 <button className="btn waves-effect waves-light" onClick={() => { alert("edit") }}>
                     <i className="Tiny material-icons">edit</i>
                 </button>
-                <button className="btn waves-effect waves-light red" style={{ marginLeft: "5px" }} onClick={() => { alert("delete") }}>
+                <button className="btn waves-effect waves-light red" style={{ marginLeft: "5px" }} onClick={handleRemoveTransaction}>
                     <i className="Tiny material-icons">delete</i>
                 </button>
             </div>
