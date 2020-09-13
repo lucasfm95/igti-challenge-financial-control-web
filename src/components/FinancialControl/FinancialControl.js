@@ -5,6 +5,7 @@ import css from "./financialControl.module.css";
 import Totalizer from "../Totalizer/Totalizer";
 import ReferenceMonth from "../ReferenceMonth/ReferenceMonth";
 import FilterTransaction from "../FilterTransaction/FilterTransaction";
+import ModalDetail from "../ModalDetail/ModalDetail";
 
 var transactions = [];
 
@@ -84,6 +85,7 @@ export default function FinancialControl() {
             <ReferenceMonth onChange={handleChangeSelect} initSelected={refYearMonth} />
             <Totalizer totalizer={totalizer} />
             <FilterTransaction onChange={handleChangeInput} />
+            <ModalDetail />
             <Transactions transactions={filteredTransactions} />
         </div>
     )
